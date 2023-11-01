@@ -1,16 +1,22 @@
 import pandas as pd
+from datetime import datetime, timedelta
 
 # Load the CSV file into a DataFrame
-input_csv = 'input.csv'
-df = pd.read_csv(input_csv)
+input_csv = 'dailyupsell_addons_sep15_oct14.csv'
+df = pd.read_csv(input_csv, dtype=object)
 
-# Assuming the date column is named 'date_column' in the CSV file
-date_column = 'date_column'
+# Extract the day from the 'Timestamp' column
+df['day'] = pd.to_datetime(df['Timestamp']).dt.date
 
-# Group the DataFrame by the date column
-grouped = df.groupby(date_column)
+# Group the DataFrame by the day column
+grouped = df.groupby('day')
 
 # Iterate through the groups and save each group to a separate CSV file
-for name, group in grouped:
-    output_csv = f'output_{name}.csv'
-    group.to_csv(output_csv, index=False)
+for date, group in grouped:
+    # Add 1 day to the date
+    new_date = date + timedelta(days=1)
+    # Convert date back to string
+    new_date_str = new_date.strftime('%Y%m%d')
+    output_csv = f'dailyupsell_addons_{new_date_str}999999.csv' ####update parameter here too!
+    group = group.drop('day', axis=1)
+    group.to_csv(output_csv, index=False, quoting=1)
