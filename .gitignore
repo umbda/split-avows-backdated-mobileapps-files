@@ -164,3 +164,5 @@ source/
 *.zip
 results/
 *.csv
+*.xlsx
+*.xls

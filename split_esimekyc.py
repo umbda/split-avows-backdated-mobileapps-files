@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 # Load the CSV file into a DataFrame
-input_csv = 'dailyesim_ekyc_20231129_20231219.csv'
+input_csv = 'dailyesim_ekyc_20231220_20240102.csv'
 df = pd.read_csv(input_csv, dtype=object)
 
 # Extract the day from the 'Timestamp' column
